@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y \
     make \
     wget
 
-RUN mkdir ${FASTDHT_PATH}/fastdht \
- && mkdir ${FASTDHT_BASE_PATH} \
- && mkdir ${FASTDHT_PATH}/libfastcommon \
- && mkdir ${FASTDHT_PATH}/download
+RUN mkdir -p ${FASTDHT_PATH}/fastdht \
+ && mkdir -p ${FASTDHT_BASE_PATH} \
+ && mkdir -p ${FASTDHT_PATH}/libfastcommon \
+ && mkdir -p ${FASTDHT_PATH}/download
 
 RUN git clone https://github.com/happyfish100/libfastcommon.git ${FASTDHT_PATH}/libfastcommon \
  && git clone https://github.com/happyfish100/fastdht.git ${FASTDHT_PATH}/fastdht \
