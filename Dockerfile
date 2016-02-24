@@ -26,10 +26,6 @@ WORKDIR ${FASTDHT_PATH}/libfastcommon
 
 RUN ["/bin/bash", "-c", "./make.sh && ./make.sh install"]
 
-WORKDIR ${FASTDHT_PATH}/fastdht
-
-RUN ["/bin/bash", "-c", "./make.sh && ./make.sh install"]
-
 WORKDIR ${FASTDHT_PATH}/download/db-${BERKELEY_DB_VERSION}/build_unix
 
 RUN ../dist/configure --prefix=/usr \
