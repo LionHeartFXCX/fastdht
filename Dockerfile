@@ -20,7 +20,7 @@ RUN mkdir -p ${FASTDHT_PATH}/fastdht \
 RUN git clone https://github.com/happyfish100/libfastcommon.git ${FASTDHT_PATH}/libfastcommon \
  && git clone https://github.com/happyfish100/fastdht.git ${FASTDHT_PATH}/fastdht \
  && wget "http://download.oracle.com/berkeley-db/db-${BERKELEY_DB_VERSION}.tar.gz" -P ${FASTDHT_PATH}/download \
- && tar zxvf /fastDFS/download/db-${BERKELEY_DB_VERSION}.tar.gz -C ${FASTDHT_PATH}/download
+ && tar zxvf ${FASTDHT_PATH}/download/db-${BERKELEY_DB_VERSION}.tar.gz -C ${FASTDHT_PATH}/download
 
 WORKDIR ${FASTDHT_PATH}/libfastcommon
 
