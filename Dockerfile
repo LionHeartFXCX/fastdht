@@ -24,6 +24,7 @@ RUN tar zxvf ${FASTDHT_PATH}/download/db-${BERKELEY_DB_VERSION}.tar.gz -C ${FAST
 
 WORKDIR ${FASTDHT_PATH}/download/db-${BERKELEY_DB_VERSION}/build_unix
 
+RUN ../dist/configure --prefix=/usr 
 RUN make
 RUN make install
 
