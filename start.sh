@@ -1,19 +1,41 @@
 #!/bin/bash
 #set -e
 
-# if the log file exists, delete it to avoid useless log content
+# if the log file exists, delete it to avoid useless log content.
 FASTDHT_LOG_FILE="$FASTDHT_BASE_PATH/logs/fdhtd.log"
+FASTDHT_PID_NUMBER="$FASTDHT_BASE_PATH/data/fdhtd.pid"
 
-if [  -f "$FASTDHT_BASE_PATH/logs/fdhtd.log" ]; then 
+if [  -f "$FASTDHT_LOG_FILE" ]; then 
 	rm  "$FASTDHT_LOG_FILE"
 fi
 
-echo "start the fastdht server..."
+echo "try to start the fastdht server..."
 
-# start the tracker node	
+# start the fastdht server.	
 fdhtd /etc/fdht/fdht.conf start
 
-# wait for pid file(importent!)
-sleep 3s
+# wait for pid file(important!),the max start time is 5 seconds,if the pid number does not appear in 5 seconds,fastdht start failed.
+TIMES=5
+while [ ! -f "$FASTDHT_PID_NUMBER" -a $TIMES -gt 0 ]
+do
+    sleep 1s
+	TIMES=`expr $TIMES - 1`
+done
 
-tail -F --pid=`cat $FASTDHT_BASE_PATH/data/fdhtd.pid`  $FASTDHT_BASE_PATH/logs/fdhtd.log
+# if the fastdht server start successfully, print the started time.
+if [ $TIMES -gt 0 ]; then
+    echo "the fastdht server started successfully at $(date +%Y-%m-%d_%H:%M)"
+	
+	# make the container have foreground process(primary commond!)
+    tail -F --pid=`cat $FASTDHT_PID_NUMBER` /dev/null
+# else print the error.
+else
+    echo "the fastdht server started failed at $(date +%Y-%m-%d_%H:%M)"
+fi
+
+# give the detail log address
+echo "please have a look at the log detail at $FASTDHT_LOG_FILE"
+
+# leave balnk lines to differ from next log.
+echo
+echo
